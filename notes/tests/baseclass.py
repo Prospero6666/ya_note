@@ -9,6 +9,13 @@ User = get_user_model()
 
 
 class BaseClass(TestCase):
+    HOME = reverse('notes:home')
+    LOGIN = reverse('users:login')
+    LOGOUT = reverse('users:logout')
+    SIGNUP = reverse('users:signup')
+    LIST = reverse('notes:list')
+    ADD = reverse('notes:add')
+    SUCCESS = reverse('notes:success')
 
     @classmethod
     def setUpTestData(cls):
@@ -28,16 +35,7 @@ class BaseClass(TestCase):
             'title': 'Новый заголовок',
             'text': 'Новый текст',
             'slug': 'new-slug',
-            'author': cls.author
         }
-        cls.HOME = reverse('notes:home')
-        cls.LOGIN = reverse('users:login')
-        cls.LOGOUT = reverse('users:logout')
-        cls.SIGNUP = reverse('users:signup')
-        cls.LIST = reverse('notes:list')
-        cls.ADD = reverse('notes:add')
-        cls.SUCCESS = reverse('notes:success')
         cls.DETAIL = reverse('notes:detail', args=(cls.note.slug,))
         cls.EDIT = reverse('notes:edit', args=(cls.note.slug,))
         cls.DELETE = reverse('notes:delete', args=(cls.note.slug,))
-        cls.REDIRECT = f'{cls.LOGIN}?next='

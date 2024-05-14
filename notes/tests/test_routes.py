@@ -46,7 +46,7 @@ class TestRoutes(BaseClass):
             with self.subTest():
                 try:
                     self.assertRedirects(
-                        self.client.get(url), self.REDIRECT + url
+                        self.client.get(url), f'{self.LOGIN}?next={url}'
                     )
                 except AssertionError:
                     self.fail(f"Ошибка для URL '{url}': {AssertionError}")
