@@ -7,15 +7,25 @@ from notes.models import Note
 
 User = get_user_model()
 
+HOME = reverse('notes:home')
+LOGIN = reverse('users:login')
+LOGOUT = reverse('users:logout')
+SIGNUP = reverse('users:signup')
+LIST = reverse('notes:list')
+ADD = reverse('notes:add')
+SUCCESS = reverse('notes:success')
+DETAIL = reverse('notes:detail', args=('note-slug',))
+EDIT = reverse('notes:edit', args=('note-slug',))
+DELETE = reverse('notes:delete', args=('note-slug',))
+DETAIL_REDIRECT = f'{LOGIN}?next={DETAIL}'
+EDIT_REDIRECT = f'{LOGIN}?next={EDIT}'
+DELETE_REDIRECT = f'{LOGIN}?next={DELETE}'
+ADD_REDIRECT = f'{LOGIN}?next={ADD}'
+SUCCESS_REDIRECT = f'{LOGIN}?next={SUCCESS}'
+LIST_REDIRECT = f'{LOGIN}?next={LIST}'
+
 
 class BaseClass(TestCase):
-    HOME = reverse('notes:home')
-    LOGIN = reverse('users:login')
-    LOGOUT = reverse('users:logout')
-    SIGNUP = reverse('users:signup')
-    LIST = reverse('notes:list')
-    ADD = reverse('notes:add')
-    SUCCESS = reverse('notes:success')
 
     @classmethod
     def setUpTestData(cls):
@@ -36,6 +46,3 @@ class BaseClass(TestCase):
             'text': 'Новый текст',
             'slug': 'new-slug',
         }
-        cls.DETAIL = reverse('notes:detail', args=(cls.note.slug,))
-        cls.EDIT = reverse('notes:edit', args=(cls.note.slug,))
-        cls.DELETE = reverse('notes:delete', args=(cls.note.slug,))
