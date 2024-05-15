@@ -7,11 +7,11 @@ from notes.tests.baseclass import LIST, ADD, EDIT
 class TestContent(BaseClass):
 
     def test_notes_list_for_author_client(self):
-        response = self.author_client.get(LIST)
-        notes_list = response.context['object_list']
-        self.assertIn(self.note, notes_list)
+        notes_qset = self.author_client.get(LIST).context['object_list']
+        self.assertIn(self.note, notes_qset)
         self.assertEqual(Note.objects.count(), 1)
-        author_client_note = notes_list[0]
+        author_client_note = notes_qset[0]
+        self.assertEqual(len(notes_qset), 1)
         self.assertEqual(author_client_note.title, self.note.title)
         self.assertEqual(author_client_note.text, self.note.text)
         self.assertEqual(author_client_note.slug, self.note.slug)
@@ -25,7 +25,8 @@ class TestContent(BaseClass):
     def test_pages_contains_form(self):
         urls = (ADD, EDIT)
         for url in urls:
-            with self.subTest(url=url, msg=f"Ошибка для URL '{url}'"):
+            with self.subTest(url=url):
+                self.assertIn('form', self.author_client.get(url).context)
                 self.assertIsInstance(
                     self.author_client.get(url).context['form'], NoteForm
                 )
